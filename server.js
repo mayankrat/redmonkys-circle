@@ -1,4 +1,4 @@
-// server.js (Final Corrected Version)
+// server.js (Final Version for Shopify Proxy)
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-// This function sends our app with the correct HTML label.
+// This function sends our app with the correct LIQUID label for Shopify.
 const sendApp = (req, res) => {
-    res.setHeader('Content-Type', 'text/html'); // This is the corrected line
+    res.setHeader('Content-Type', 'application/liquid'); // This is the corrected line
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 };
 
