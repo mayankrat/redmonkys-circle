@@ -1,28 +1,15 @@
-// server.js (Final Version for Shopify Proxy)
+// server.js (Simple Test Version)
 const express = require('express');
-const path = require('path');
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'build')));
-
-// This function sends our app with the correct LIQUID label for Shopify.
-const sendApp = (req, res) => {
-    res.setHeader('Content-Type', 'application/liquid'); // This is the corrected line
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-};
-
-// This handles the base case: /apps/circle
-app.get('/apps/circle', sendApp);
-
-// This handles all other cases like /apps/circle/feed
-app.get('/apps/circle/*', sendApp);
-
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
+app.get('/apps/circle', (req, res) => {
+    // Set the required Shopify header
+    res.setHeader('Content-Type', 'application/liquid');
+    // Send a very simple response
+    res.send('<h1>Hello from my app! If you see this, the connection is working.</h1>');
 });
 
 app.listen(PORT, () => {
-    console.log(`Shopify App Proxy server listening on port ${PORT}`);
+    console.log(`Simple test server listening on port ${PORT}`);
 });
